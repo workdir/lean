@@ -57,3 +57,13 @@ def list := List.cons 1 (List.cons 2 (List.cons 3 List.nil))
 #eval take 2 list
 #eval take 1 list
 
+def left : String × (String ⊕ String) := Prod.mk "Times" (Sum.inl "Left")
+def right : String × (String ⊕ String) := Prod.mk "Times" (Sum.inl "Right")
+
+def distribute { α β γ : Type } (x : α × (β ⊕ γ)) : ((α × β) ⊕ (α × γ)) :=
+  match x.snd with 
+    | Sum.inl l => Sum.inl (x.fst, l)
+    | Sum.inr r => Sum.inr (x.fst, r)
+
+#eval distribute left
+#eval distribute right

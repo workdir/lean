@@ -1,4 +1,4 @@
-def findLast? {α : Type} (xs : List α) : Option α := 
+def findLast? {α : Type} (xs : List α) : Option α :=
   match xs with
    | List.nil => Option.none
    | List.cons x List.nil => Option.some x
@@ -12,8 +12,8 @@ def nums : (List Nat) := List.cons 4 (List.cons 3 (List.cons 2 List.nil))
 def List.findFirst? { a : Type } (xs : List a) (predicate : a → Bool) : Option a :=
   match xs with
   | List.nil => Option.none
-  | List.cons x xs' => Option.some x 
-    |>.filter predicate 
+  | List.cons x xs' => Option.some x
+    |>.filter predicate
     |>.orElse fun _ => (List.findFirst? xs' predicate)
 
 
@@ -25,13 +25,13 @@ def Prod.switch { α β : Type } (pair : α × β) : β × α := Prod.mk pair.sn
 
 def PetName { α β : Type } := α ⊕ β
 
-def zip {α β : Type } (xs : List α) ( ys : List β) : List ( α × β ) := 
+def zip {α β : Type } (xs : List α) ( ys : List β) : List ( α × β ) :=
   match xs with
   | List.nil => List.nil
-  | List.cons x xs' => 
+  | List.cons x xs' =>
     match ys with
     | List.nil => List.nil
-    | List.cons y ys' => List.cons (x, y) (zip xs' ys') 
+    | List.cons y ys' => List.cons (x, y) (zip xs' ys')
 
 def list3 : List Nat := List.cons 1 (List.cons 2 (List.cons 3 List.nil))
 def list4to6 : List Nat := List.cons 4 (List.cons 5 (List.cons 6 List.nil))
@@ -43,17 +43,17 @@ def list1 : List Nat := List.cons 1 List.nil
 #eval zip empty list4to6
 #eval zip list3 list1
 
-#check List.length
-#check Option.guard
-#check Option.getD
+def take { α : Type } (n : Nat) (xs : List α): List α :=  
+  if xs.length <= n then xs
+  else if n = 0 then List.nil
+  else 
+    match xs with 
+      | [] => List.nil
+      | x :: xs' => List.cons x (take (n-1) xs')
 
-def isGreaterThan { α : Type } ( this : Nat ) (xs : List α) : Bool := List.length xs > this 
+def list := List.cons 1 (List.cons 2 (List.cons 3 List.nil))
 
+#eval take 0 list
+#eval take 2 list
+#eval take 1 list
 
-def take {α : Type} (n : Nat) (xs : List α) : List α :=
-  match n, xs with
-  | 0, _ => []
-  | _, [] => []
-  | Nat.succ n', x :: xs' => x :: take n' xs'
-
-#eval take 2 list3

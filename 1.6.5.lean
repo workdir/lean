@@ -67,3 +67,14 @@ def distribute { α β γ : Type } (x : α × (β ⊕ γ)) : ((α × β) ⊕ (α
 
 #eval distribute left
 #eval distribute right
+
+def distributeBool {α : Type} (b : Bool × α) : α ⊕ α :=
+  match b with
+    | (true, x) => Sum.inr x
+    | (false, y) => Sum.inl y  
+
+def bf : Bool × Nat := (false, 1)
+def bt : Bool × Nat := (true, 1)
+
+#eval distributeBool bf
+#eval distributeBool bt
